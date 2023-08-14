@@ -1,11 +1,9 @@
 package com.example.newsapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.newsapp.R
-import com.example.newsapp.api.NewsAPI
 import com.example.newsapp.databinding.ActivityNewsBinding
 import com.example.newsapp.db.ArticleDatabase
 import com.example.newsapp.repository.NewsRepository
@@ -16,20 +14,21 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class NewsActivity : FragmentActivity() {
 
-    private lateinit var binding: ActivityNewsBinding
-
     lateinit var viewModel: NewsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityNewsBinding.inflate(layoutInflater)
+        val newsRepository = NewsRepository(ArticleDatabase(this))
+        val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
+        viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
+
+        val binding by lazy {
+            ActivityNewsBinding.inflate(layoutInflater)
+        }
+
         val view = binding.root
         setContentView(view)
-
-        val newsRepository = NewsRepository()
-        val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
-        viewModel = ViewModelProvider(this, viewModelProviderFactory).get((NewsViewModel::class.java))
 
         val bottomNavigationView: BottomNavigationView = binding.bottomNavigationView
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->

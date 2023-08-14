@@ -27,10 +27,7 @@ import kotlinx.coroutines.launch
 
 class SearchNewsFragment : Fragment(){
 
-    lateinit var newsViewModel: NewsViewModel
-    lateinit var newsAdapter: NewsAdapter
-
-    lateinit var binding: FragmentSearchNewsBinding
+    private lateinit var binding: FragmentSearchNewsBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,20 +36,20 @@ class SearchNewsFragment : Fragment(){
     ): View {
         binding = FragmentSearchNewsBinding.inflate(inflater, container, false)
 
-        //Initializing newsViewModel
-        val newsRepository = NewsRepository()
-        val newsViewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
-        newsViewModel = ViewModelProvider(this, newsViewModelProviderFactory).get((NewsViewModel::class.java))
-
-        //Initializing newsAdapter
-        newsAdapter = NewsAdapter()
-
         return binding.root
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val newsViewModel by lazy {
+            (activity as NewsActivity).viewModel
+        }
+
+        val newsAdapter by lazy {
+            NewsAdapter()
+        }
 
         var job: Job? = null
         binding.searchNews.addTextChangedListener {editable ->
