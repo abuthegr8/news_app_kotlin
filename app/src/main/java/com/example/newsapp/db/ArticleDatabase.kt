@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.newsapp.models.Article
+import com.example.newsapp.ui.fragments.ArticleFragment
 
 @Database(
     entities = [Article::class],
@@ -22,7 +23,7 @@ abstract class ArticleDatabase : RoomDatabase() {
         private val LOCK = Any()
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
-            instance ?: createDatabase(context).also { instance = it }//TODO scope fn
+            instance ?: createDatabase(context).also { instance = it }
         }
 
         private fun createDatabase(context: Context) =
