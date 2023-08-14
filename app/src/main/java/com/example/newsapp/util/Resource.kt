@@ -1,7 +1,7 @@
 package com.example.newsapp.util
 
-sealed class Resource<T>(
-    val data: T? = null,
+sealed class Resource<T>(//TODO: what is T
+    val data: T? = null,//sealed class
     val message:String? = null
 ){
     class Success<T>(data: T) : Resource<T>(data)

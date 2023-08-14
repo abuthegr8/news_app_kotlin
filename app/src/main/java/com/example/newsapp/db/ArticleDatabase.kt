@@ -17,12 +17,12 @@ abstract class ArticleDatabase : RoomDatabase() {
     abstract fun getArticleDAO(): ArticleDAO
 
     companion object {
-        @Volatile
+        @Volatile //Learn
         private var instance: ArticleDatabase? = null
         private val LOCK = Any()
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
-            instance ?: createDatabase(context).also { instance = it }
+            instance ?: createDatabase(context).also { instance = it }//TODO scope fn
         }
 
         private fun createDatabase(context: Context) =
@@ -32,4 +32,5 @@ abstract class ArticleDatabase : RoomDatabase() {
                 "article_db.db"
             ).build()
     }
+    //TODO: Improve upon codde
 }

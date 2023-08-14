@@ -2,6 +2,7 @@ package com.example.newsapp.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import com.example.newsapp.R
 import com.example.newsapp.api.NewsAPI
@@ -13,7 +14,7 @@ import com.example.newsapp.ui.fragments.SavedNewsFragment
 import com.example.newsapp.ui.fragments.SearchNewsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class NewsActivity : AppCompatActivity() {
+class NewsActivity : FragmentActivity() {
 
     private lateinit var binding: ActivityNewsBinding
 

@@ -19,8 +19,8 @@ class NewsViewModel(
     var searchNews: MutableLiveData<Resource<NewsResponse>> = MutableLiveData()
     var searchNewsPage = 1
 
-    fun getBreakingNews(countryCode: String) = viewModelScope.launch {
-        breakingNews.postValue(Resource.Loading())
+    fun getBreakingNews(countryCode: String) = viewModelScope.launch {//why not globalscope
+        breakingNews.postValue(Resource.Loading())//dispatcher, default
         val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
         breakingNews.postValue(handleBreakingNewsResponse(response))
     }
@@ -28,7 +28,7 @@ class NewsViewModel(
     fun searchNews(searchQuery: String) = viewModelScope.launch {
         searchNews.postValue(Resource.Loading())
         val response = newsRepository.searchNews(searchQuery, searchNewsPage)
-        searchNews.postValue((handleSearchNewsResponse((response))))
+        searchNews.postValue((handleSearchNewsResponse((response))))//postvalue
     }
 
     fun handleBreakingNewsResponse(response: Response<NewsResponse>) : Resource<NewsResponse> {

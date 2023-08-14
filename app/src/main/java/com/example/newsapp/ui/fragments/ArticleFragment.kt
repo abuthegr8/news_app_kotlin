@@ -12,7 +12,7 @@ import com.example.newsapp.models.Article
 
 class ArticleFragment : Fragment(){
 
-    lateinit var binding: FragmentArticleBinding
+    lateinit var binding: FragmentArticleBinding//Not required
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -22,10 +22,10 @@ class ArticleFragment : Fragment(){
         binding = FragmentArticleBinding.inflate(inflater, container, false)
 
         val webView = binding.webView
-        val article = arguments?.getSerializable("article") as Article
+        val article = arguments?.getSerializable("article") as Article//how is article being loaded
 
         webView.webViewClient = WebViewClient()
-        webView.settings.javaScriptEnabled = true
+//        webView.settings.javaScriptEnabled = true
 
         webView.loadUrl(article.url)
         webView.settings.setSupportZoom(true)

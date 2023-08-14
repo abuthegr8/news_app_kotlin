@@ -24,7 +24,7 @@ import com.example.newsapp.util.Resource
 class BreakingNewsFragment : Fragment(){
 
     private lateinit var newsViewModel: NewsViewModel
-    private lateinit var newsAdapter: NewsAdapter
+    private lateinit var newsAdapter: NewsAdapter//use lazy
 
     private lateinit var binding: FragmentBreakingNewsBinding
 
@@ -42,7 +42,6 @@ class BreakingNewsFragment : Fragment(){
         newsViewModel.getBreakingNews("us")
 
         //Initializing newsAdapter
-        newsAdapter = NewsAdapter()
 
         return binding.root
     }
@@ -50,6 +49,8 @@ class BreakingNewsFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        newsAdapter = NewsAdapter()
 
         binding.newsView.apply {
             layoutManager = LinearLayoutManager(requireContext())
