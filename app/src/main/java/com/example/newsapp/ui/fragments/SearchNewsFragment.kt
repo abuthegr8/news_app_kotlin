@@ -39,7 +39,6 @@ class SearchNewsFragment : Fragment(){
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -77,6 +76,7 @@ class SearchNewsFragment : Fragment(){
             fragment.arguments = bundle
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id._fragment_main, fragment )
+                .addToBackStack(null)
                 .commit()
         }
 

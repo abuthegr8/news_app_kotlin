@@ -58,6 +58,7 @@ class SavedNewsFragment : Fragment(){
             fragment.arguments = bundle
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id._fragment_main, fragment )
+                .addToBackStack(null)
                 .commit()
         }
 
