@@ -73,10 +73,11 @@ class SearchNewsFragment : Fragment(){
             val bundle = Bundle().apply {
                 putSerializable("article", it)
             }
-            findNavController().navigate(
-                R.id.action_searchNewsFragment_to_articleFragment,
-                bundle
-            )
+            val fragment = ArticleFragment()
+            fragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id._fragment_main, fragment )
+                .commit()
         }
 
         newsViewModel.searchNews.observe(viewLifecycleOwner) {resource ->

@@ -13,14 +13,20 @@ import com.google.android.material.snackbar.Snackbar
 
 class ArticleFragment : Fragment(){
 
+    private lateinit var binding: FragmentArticleBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val binding by lazy {
-            FragmentArticleBinding.inflate(inflater, container, false)
-        }
+        binding = FragmentArticleBinding.inflate(inflater, container, false)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val newsViewModel by lazy {
             (activity as NewsActivity).viewModel
@@ -35,11 +41,9 @@ class ArticleFragment : Fragment(){
             settings.setSupportZoom(true)
         }
 
-
         binding.saveButton.setOnClickListener{
             newsViewModel.saveArticle(article)
-            view?.let { it1 -> Snackbar.make(it1, "Article saved successfully", Snackbar.LENGTH_SHORT).show() }
+            view.let { it1 -> Snackbar.make(it1, "Article saved successfully", Snackbar.LENGTH_SHORT).show() }
         }
-        return binding.root
     }
 }

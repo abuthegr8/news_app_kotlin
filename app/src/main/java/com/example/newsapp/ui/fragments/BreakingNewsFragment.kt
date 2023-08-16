@@ -1,10 +1,12 @@
 package com.example.newsapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.R
@@ -16,7 +18,17 @@ import com.example.newsapp.util.Resource
 
 class BreakingNewsFragment : Fragment(){
 
-    private lateinit var binding: FragmentBreakingNewsBinding
+    lateinit var binding: FragmentBreakingNewsBinding
+
+    private val newsViewModel by lazy {
+        (activity as NewsActivity).viewModel
+    }
+
+    private val newsAdapter by lazy {
+        NewsAdapter()
+    }
+
+    val TAG = "BreakingNewsFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -24,10 +36,6 @@ class BreakingNewsFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentBreakingNewsBinding.inflate(inflater, container, false)
-
-        val newsViewModel by lazy {
-            (activity as NewsActivity).viewModel
-        }
 
         newsViewModel.getBreakingNews("us")
 
@@ -38,14 +46,6 @@ class BreakingNewsFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val newsViewModel by lazy {
-            (activity as NewsActivity).viewModel
-        }
-
-        val newsAdapter by lazy {
-            NewsAdapter()
-        }
-
         binding.newsView.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = newsAdapter
@@ -55,22 +55,27 @@ class BreakingNewsFragment : Fragment(){
             val bundle = Bundle().apply {
                 putSerializable("article", it)
             }
-            findNavController().navigate(
-                 R.id.action_breakingNewsFragment_to_articleFragment,
-                 bundle
-            )
+            val fragment = ArticleFragment()
+            fragment.arguments = bundle
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id._fragment_main, fragment )
+                .commit()
         }
 
-        newsViewModel.breakingNews.observe(viewLifecycleOwner) {resource ->
-            resource?.let { mResource ->
-                when(mResource){
-                    is Resource.Loading -> {}
-                    is Resource.Error -> {}
-                    else -> {
-                        newsAdapter.differ.submitList(mResource.data?.articles?.toMutableList() ?: mutableListOf<Article>())
+        newsViewModel.breakingNews.observe(viewLifecycleOwner) {response ->
+                when(response){
+                    is Resource.Success -> {
+                        response.data?.let { newsResponse ->
+                            newsAdapter.differ.submitList(newsResponse.articles)
+                        }
                     }
+                    is Resource.Error -> {
+                        response.message?.let { message ->
+                            Log.e(TAG, "An error occurred: $message")
+                        }
+                    }
+                    is Resource.Loading -> {}
                 }
-            }
         }
     }
 }
