@@ -1,6 +1,7 @@
 package com.example.newsapp.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +28,17 @@ import kotlinx.coroutines.launch
 
 class SearchNewsFragment : Fragment(){
 
-    private lateinit var binding: FragmentSearchNewsBinding
+    lateinit var binding: FragmentSearchNewsBinding
+
+    private val newsViewModel by lazy {
+        (activity as NewsActivity).viewModel
+    }
+
+    private val newsAdapter by lazy {
+        NewsAdapter()
+    }
+
+    val TAG = "BreakingNewsFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,14 +52,6 @@ class SearchNewsFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val newsViewModel by lazy {
-            (activity as NewsActivity).viewModel
-        }
-
-        val newsAdapter by lazy {
-            NewsAdapter()
-        }
 
         var job: Job? = null
         binding.searchNews.addTextChangedListener {editable ->
@@ -80,15 +83,19 @@ class SearchNewsFragment : Fragment(){
                 .commit()
         }
 
-        newsViewModel.searchNews.observe(viewLifecycleOwner) {resource ->
-            resource?.let { mResource ->
-                when(mResource){
-                    is Resource.Loading -> {}
-                    is Resource.Error -> {}
-                    else -> {
-                        newsAdapter.differ.submitList(mResource.data?.articles?.toMutableList() ?: mutableListOf<Article>())
+        newsViewModel.searchNews.observe(viewLifecycleOwner) {response ->
+            when(response){
+                is Resource.Success -> {
+                    response.data?.let { newsResponse ->
+                        newsAdapter.differ.submitList(newsResponse.articles)
                     }
                 }
+                is Resource.Error -> {
+                    response.message?.let { message ->
+                        Log.e(TAG, "An error occurred: $message")
+                    }
+                }
+                is Resource.Loading -> {}
             }
         }
     }

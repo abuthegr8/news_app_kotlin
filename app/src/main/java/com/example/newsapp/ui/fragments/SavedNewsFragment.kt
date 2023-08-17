@@ -22,7 +22,15 @@ import com.google.android.material.snackbar.Snackbar
 
 class SavedNewsFragment : Fragment(){
 
-    private lateinit var binding: FragmentSavedNewsBinding
+    lateinit var binding: FragmentSavedNewsBinding
+
+    val newsViewModel by lazy {
+        (activity as NewsActivity).viewModel
+    }
+
+    val newsAdapter by lazy {
+        NewsAdapter()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,14 +44,6 @@ class SavedNewsFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val newsViewModel by lazy {
-            (activity as NewsActivity).viewModel
-        }
-
-        val newsAdapter by lazy {
-            NewsAdapter()
-        }
 
         binding.savedNewsView.apply {
             layoutManager = LinearLayoutManager(requireContext())
