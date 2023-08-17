@@ -1,7 +1,9 @@
 package com.example.newsapp.ui
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.newsapp.R
 import com.example.newsapp.databinding.ActivityNewsBinding
@@ -22,6 +24,10 @@ class NewsActivity : FragmentActivity() {
         val newsRepository = NewsRepository(ArticleDatabase(this))
         val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
+
+        viewModel.errorLiveData.observe(this, Observer { errorMessage ->
+            showToast(errorMessage)
+        })
 
         val binding by lazy {
             ActivityNewsBinding.inflate(layoutInflater)
@@ -58,5 +64,9 @@ class NewsActivity : FragmentActivity() {
             }
         }
 
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
