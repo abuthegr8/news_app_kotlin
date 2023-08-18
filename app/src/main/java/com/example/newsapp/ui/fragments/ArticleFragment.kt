@@ -32,10 +32,9 @@ class ArticleFragment : Fragment(){
             (activity as NewsActivity).viewModel
         }
 
-        val webView = binding.webView
         val article = arguments?.getSerializable("article") as Article
 
-        webView.apply {
+        binding.webView.apply {
             webViewClient = WebViewClient()
             loadUrl(article.url)
             settings.setSupportZoom(true)

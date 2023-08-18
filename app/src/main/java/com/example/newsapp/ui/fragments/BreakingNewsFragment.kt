@@ -18,7 +18,7 @@ import com.example.newsapp.util.Resource
 
 class BreakingNewsFragment : Fragment(){
 
-    lateinit var binding: FragmentBreakingNewsBinding
+    private lateinit var binding: FragmentBreakingNewsBinding
 
     private val newsViewModel by lazy {
         (activity as NewsActivity).viewModel
@@ -28,7 +28,7 @@ class BreakingNewsFragment : Fragment(){
         NewsAdapter()
     }
 
-    val TAG = "BreakingNewsFragment"
+    private val TAG = "BreakingNewsFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -9,6 +9,7 @@ import com.example.newsapp.models.Article
 import com.example.newsapp.models.NewsResponse
 import com.example.newsapp.repository.NewsRepository
 import com.example.newsapp.util.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.net.UnknownHostException
@@ -25,13 +26,13 @@ class NewsViewModel(
     private val _errorLiveData = MutableLiveData<String>()
     val errorLiveData: LiveData<String> = _errorLiveData
 
-    fun getBreakingNews(countryCode: String) = viewModelScope.launch {
+    fun getBreakingNews(countryCode: String) = viewModelScope.launch { Dispatchers.IO
         breakingNews.postValue(Resource.Loading())//dispatcher, default
         val response = newsRepository.getBreakingNews(countryCode, breakingNewsPage)
         breakingNews.postValue(handleBreakingNewsResponse(response))
     }
 
-    fun searchNews(searchQuery: String) = viewModelScope.launch {
+    fun searchNews(searchQuery: String) = viewModelScope.launch {Dispatchers.IO
         searchNews.postValue(Resource.Loading())
         val response = newsRepository.searchNews(searchQuery, searchNewsPage)
         searchNews.postValue((handleSearchNewsResponse((response))))//postvalue
@@ -67,13 +68,13 @@ class NewsViewModel(
         return Resource.Error(response.message())
     }
 
-    fun saveArticle(article: Article) = viewModelScope.launch {
+    fun saveArticle(article: Article) = viewModelScope.launch {Dispatchers.IO
         newsRepository.upsert(article)
     }
 
     fun getSavedNews() = newsRepository.getSavedNews()
 
-    fun deleteArticle(article: Article) = viewModelScope.launch {
+    fun deleteArticle(article: Article) = viewModelScope.launch {Dispatchers.IO
         newsRepository.deleteArticle(article)
     }
 }

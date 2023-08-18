@@ -28,7 +28,7 @@ import kotlinx.coroutines.launch
 
 class SearchNewsFragment : Fragment(){
 
-    lateinit var binding: FragmentSearchNewsBinding
+    private lateinit var binding: FragmentSearchNewsBinding
 
     private val newsViewModel by lazy {
         (activity as NewsActivity).viewModel
@@ -38,7 +38,7 @@ class SearchNewsFragment : Fragment(){
         NewsAdapter()
     }
 
-    val TAG = "BreakingNewsFragment"
+    private val TAG = "BreakingNewsFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -22,13 +22,13 @@ import com.google.android.material.snackbar.Snackbar
 
 class SavedNewsFragment : Fragment(){
 
-    lateinit var binding: FragmentSavedNewsBinding
+    private lateinit var binding: FragmentSavedNewsBinding
 
-    val newsViewModel by lazy {
+    private val newsViewModel by lazy {
         (activity as NewsActivity).viewModel
     }
 
-    val newsAdapter by lazy {
+    private val newsAdapter by lazy {
         NewsAdapter()
     }
 
