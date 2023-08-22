@@ -18,7 +18,7 @@ abstract class ArticleDatabase : RoomDatabase() {
     abstract fun getArticleDAO(): ArticleDAO
 
     companion object {
-        @Volatile //Learn
+        @Volatile
         private var instance: ArticleDatabase? = null
         private val LOCK = Any()
 
@@ -33,5 +33,4 @@ abstract class ArticleDatabase : RoomDatabase() {
                 "article_db.db"
             ).build()
     }
-    //TODO: Improve upon codde
 }

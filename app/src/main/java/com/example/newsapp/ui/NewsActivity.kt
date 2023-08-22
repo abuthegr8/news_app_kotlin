@@ -22,7 +22,7 @@ class NewsActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
 
         val newsRepository = NewsRepository(ArticleDatabase(this))
-        val viewModelProviderFactory = NewsViewModelProviderFactory(newsRepository)
+        val viewModelProviderFactory = NewsViewModelProviderFactory(application, newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
         viewModel.errorLiveData.observe(this, Observer { errorMessage ->

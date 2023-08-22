@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsapp.R
@@ -70,6 +71,7 @@ class BreakingNewsFragment : Fragment(){
                     is Resource.Error -> {
                         response.message?.let { message ->
                             Log.e(TAG, "An error occurred: $message")
+                            Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG).show()
                         }
                     }
                     is Resource.Loading -> {}

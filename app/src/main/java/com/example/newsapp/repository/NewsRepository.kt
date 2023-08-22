@@ -1,5 +1,4 @@
 package com.example.newsapp.repository
-
 import com.example.newsapp.api.RetrofitHelper
 import com.example.newsapp.db.ArticleDatabase
 import com.example.newsapp.models.Article
