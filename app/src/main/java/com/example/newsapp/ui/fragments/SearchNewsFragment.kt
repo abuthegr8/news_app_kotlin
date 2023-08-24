@@ -87,7 +87,7 @@ class SearchNewsFragment : Fragment(){
                 is Resource.Error -> {
                     response.message?.let { message ->
                         Log.e(TAG, "An error occurred: $message")
-                        Toast.makeText(activity, "An error occured: $message", Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity, "An error occurred: $message", Toast.LENGTH_LONG).show()
                     }
                 }
                 is Resource.Loading -> {}

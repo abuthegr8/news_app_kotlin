@@ -4,7 +4,7 @@ import com.example.newsapp.db.ArticleDatabase
 import com.example.newsapp.models.Article
 
 class NewsRepository(
-    val db: ArticleDatabase
+    private val db: ArticleDatabase
 ) {
 
     suspend fun getBreakingNews(countryCode: String, pageNumber: Int) =

@@ -25,10 +25,6 @@ class NewsActivity : FragmentActivity() {
         val viewModelProviderFactory = NewsViewModelProviderFactory(application, newsRepository)
         viewModel = ViewModelProvider(this, viewModelProviderFactory).get(NewsViewModel::class.java)
 
-        viewModel.errorLiveData.observe(this, Observer { errorMessage ->
-            showToast(errorMessage)
-        })
-
         val binding by lazy {
             ActivityNewsBinding.inflate(layoutInflater)
         }
@@ -63,10 +59,5 @@ class NewsActivity : FragmentActivity() {
                 else -> false
             }
         }
-
-    }
-
-    private fun showToast(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
