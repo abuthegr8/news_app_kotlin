@@ -32,7 +32,7 @@ class SearchNewsFragment : Fragment(){
         NewsAdapter()
     }
 
-    private val TAG = "BreakingNewsFragment"
+    private val TAG = "SearchNewsFragment"
 
     override fun onCreateView(
         inflater: LayoutInflater,
